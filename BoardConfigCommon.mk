@@ -102,8 +102,8 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_NO_GCC := true
 TARGET_KERNEL_SOURCE := kernel/samsung/sm6375
 TARGET_KERNEL_CONFIG := \
-    vendor/holi-perf_defconfig \
-    vendor/gta9p-common.config
+    vendor/holi-qgki_defconfig \
+    vendor/samsung/gta9p.config
 
 # Media
 TARGET_USES_ION := true
