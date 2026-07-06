@@ -1,18 +1,9 @@
-//
-// Copyright (C) 2023 The LineageOS Project
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
+// Copyright (C) 2024 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+
+package {
+    default_applicable_licenses: ["Android-Apache-2.0"],
+}
 
 cc_library_static {
     name: "libinit_samsung_sm6375",
@@ -26,4 +17,243 @@ cc_library_static {
     shared_libs: [
         "libbase",
     ],
+}
+
+prebuilt_etc {
+    name: "fstab.qcom",
+    src: "fstab.qcom",
+    sub_dir: "first_stage_ramdisk",
+    vendor: true,
+    compile_multilib: "both",
+}
+
+prebuilt_etc {
+    name: "fstab.qcom_vendor",
+    src: "fstab.qcom",
+    sub_dir: "vendor",
+    vendor: true,
+    compile_multilib: "both",
+}
+
+prebuilt_etc {
+    name: "fstab.ramplus",
+    src: "fstab.ramplus",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.audio.samsung.rc",
+    src: "init.audio.samsung.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.fingerprint.rc",
+    src: "init.fingerprint.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.nfc.samsung.rc",
+    src: "init.nfc.samsung.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.qcom.rc",
+    src: "init.qcom.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.qcom.usb.rc",
+    src: "init.qcom.usb.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.qti.kernel.rc",
+    src: "init.qti.kernel.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.qti.media.rc",
+    src: "init.qti.media.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.ramplus.rc",
+    src: "init.ramplus.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.samsung.bsp.rc",
+    src: "init.samsung.bsp.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.samsung.display.rc",
+    src: "init.samsung.display.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.samsung.power.rc",
+    src: "init.samsung.power.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.samsung.rc",
+    src: "init.samsung.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.target.rc",
+    src: "init.target.rc",
+    sub_dir: "init/hw",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.vendor.onebinary.rc",
+    src: "init.vendor.onebinary.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.vendor.rilchip.rc",
+    src: "init.vendor.rilchip.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.vendor.rilcommon.rc",
+    src: "init.vendor.rilcommon.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "init.vendor.sensors.rc",
+    src: "init.vendor.sensors.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "ueventd.qcom.rc",
+    src: "ueventd.qcom.rc",
+    stem: "ueventd.rc",
+    vendor: true,
+}
+
+prebuilt_etc {
+    name: "wifi_qcom.rc",
+    src: "wifi_qcom.rc",
+    sub_dir: "init",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_class_main_sh",
+    src: "init.class_main.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_kernel_post_boot_sh",
+    src: "init.kernel.post_boot.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_kernel_post_boot_blair_sh",
+    src: "init.kernel.post_boot-blair.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_kernel_post_boot_holi_sh",
+    src: "init.kernel.post_boot-holi.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qcom_class_core_sh",
+    src: "init.qcom.class_core.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qcom_early_boot_sh",
+    src: "init.qcom.early_boot.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qcom_post_boot_sh",
+    src: "init.qcom.post_boot.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qcom_sh",
+    src: "init.qcom.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qcom_usb_sh",
+    src: "init.qcom.usb.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qti_chg_policy_sh",
+    src: "init.qti.chg_policy.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qti_kernel_sh",
+    src: "init.qti.kernel.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qti_media_sh",
+    src: "init.qti.media.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "init_qti_qcv_sh",
+    src: "init.qti.qcv.sh",
+    vendor: true,
+}
+
+sh_binary {
+    name: "vendor_modprobe_sh",
+    src: "vendor_modprobe.sh",
+    vendor: true,
 }
