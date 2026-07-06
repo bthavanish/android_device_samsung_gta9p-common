@@ -16,7 +16,7 @@
 
 # Shipping API level
 BOARD_SHIPPING_API_LEVEL := 30
-PRODUCT_SHIPPING_API_LEVEL := 29
+PRODUCT_SHIPPING_API_LEVEL := 33
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/non_ab_device.mk)
 
@@ -57,14 +57,15 @@ AB_OTA_UPDATER := false
 
 # Init files and fstab
 PRODUCT_PACKAGES += \
-    fstab.ramplus \
+    fstab.qcom \
+    fstab.qcom_vendor \
     init.audio.samsung.rc \
     init.fingerprint.rc \
     init.nfc.samsung.rc \
     init.qcom.rc \
+    init.qcom.usb.rc \
     init.qti.kernel.rc \
     init.qti.media.rc \
-    init.ramplus.rc \
     init.samsung.bsp.rc \
     init.samsung.display.rc \
     init.samsung.power.rc \
@@ -79,30 +80,26 @@ PRODUCT_PACKAGES += \
 
 # Vendor scripts
 PRODUCT_PACKAGES += \
-    init.class_main.sh \
-    init.kernel.post_boot.sh \
-    init.kernel.post_boot-blair.sh \
-    init.kernel.post_boot-holi.sh \
-    init.qcom.class_core.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.sh \
-    init.qti.kernel.sh \
-    init.qti.media.sh \
-    vendor_modprobe.sh \
-    init.qti.chg_policy.sh \
-    init.qti.qcv.sh
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_VENDOR)/etc/fstab.qcom
+    init_class_main_sh \
+    init_kernel_post_boot_sh \
+    init_kernel_post_boot_blair_sh \
+    init_kernel_post_boot_holi_sh \
+    init_qcom_class_core_sh \
+    init_qcom_early_boot_sh \
+    init_qcom_post_boot_sh \
+    init_qcom_sh \
+    init_qcom_usb_sh \
+    init_qti_chg_policy_sh \
+    init_qti_kernel_sh \
+    init_qti_media_sh \
+    init_qti_qcv_sh \
+    vendor_modprobe_sh
 
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio.service \
     android.hardware.audio@6.0-impl.samsung-sm6375 \
     android.hardware.audio.effect@6.0-impl \
-    android.hardware.soundtrigger@2.2-impl \
     audio.r_submix.default \
     audio.usb.default \
     libtinycompress \
@@ -130,15 +127,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.bluetooth_audio@2.0.vendor \
     audio.bluetooth.default \
-    android.hardware.bluetooth.audio-impl \
-    android.hardware.bluetooth@1.0.vendor
+    android.hardware.bluetooth.audio-impl
 
 # Camera
 $(call soong_config_set_bool,samsungCameraVars,needs_sec_get_cam_pos_v2,true)
+$(call soong_config_set,samsungVars,target_keymaster4_library,//vendor/samsung/gta9p-common:libskeymaster4device)
 
 PRODUCT_PACKAGES += \
-    android.hardware.camera.provider@2.4-service_64 \
-    android.hardware.camera.provider@2.4-legacy \
+    android.hardware.camera.provider-service.samsung \
     camera.device@1.0-impl \
     camera.device@3.2-impl \
     camera.device@3.3-impl \
@@ -157,46 +153,29 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     charger_res_images_vendor
 
-# Configstore
-PRODUCT_PACKAGES += \
-    disable_configstore
-
 # Display
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.display.composer-service \
     vendor.qti.hardware.display.allocator-service \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
     android.hardware.graphics.mapper@4.0-impl-qti-display \
-    android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
+    vendor.qti.hardware.memtrack-service \
     init.qti.display_boot.rc \
     init.qti.display_boot.sh \
     memtrack.default \
     gralloc.default \
-    android.hardware.renderscript@1.0-impl \
-    libtinyxml \
     libtinyxml2 \
-    libqdMetaData \
-    libdisplayconfig.qti \
-    vendor.qti.hardware.display.mapper@1.1.vendor \
-    vendor.qti.hardware.display.mapper@2.0.vendor \
     vendor.qti.hardware.display.mapper@3.0.vendor \
-    vendor.qti.hardware.display.mapper@4.0.vendor \
-    vendor.display.config@2.0.vendor
+    vendor.qti.hardware.display.mapper@4.0.vendor
 
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
-    libdrmclearkeyplugin \
-    android.hardware.drm@1.3.vendor
+    libdrmclearkeyplugin
 
 # fastbootd
 PRODUCT_PACKAGES += \
     fastbootd
-
-# GNSS
-PRODUCT_PACKAGES += \
-    android.hardware.gnss@2.1.vendor
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
@@ -251,20 +230,10 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libmm-omxcore \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxEvrcEnc \
-    libOmxG711Enc \
-    libOmxQcelp13Enc \
     libstagefrighthw \
-    android.hardware.media.c2@1.0.vendor \
     libcodec2_hidl@1.0.vendor \
     libcodec2_vndk.vendor \
     libstagefright_bufferpool@2.0.1.vendor
-
-# Minijail
-PRODUCT_PACKAGES += \
-    libavservices_minijail_vendor
 
 # NFC
 PRODUCT_PACKAGES += \
@@ -272,8 +241,7 @@ PRODUCT_PACKAGES += \
 
 # Perf
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.perf@2.2.vendor \
-    vendor.qti.hardware.perf@2.0.vendor
+    vendor.qti.hardware.perf@2.2.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
@@ -324,21 +292,21 @@ PRODUCT_COPY_FILES += \
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power-service-qti \
-    android.hardware.power@1.2.vendor
+    android.hardware.power-service-qti
 
 $(call soong_config_set,qtipower,mode_ext_lib,//$(LOCAL_PATH):libpowermode-ext-gta9p)
 
+# Lineage Health
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/battery/batt_slate_mode)
+$(call soong_config_set,lineage_health,charging_control_charging_enabled,0)
+$(call soong_config_set,lineage_health,charging_control_charging_disabled,1)
+$(call soong_config_set_bool,lineage_health,charging_control_supports_bypass,false)
+$(call soong_config_set,lineage_health,fast_charge_node,/sys/class/sec/switch/afc_disable)
+$(call soong_config_set,lineage_health,fast_charge_value_none,1)
+$(call soong_config_set,lineage_health,fast_charge_value_fast_charge,0)
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.json:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.json
-
-# QMI
-PRODUCT_PACKAGES += \
-    libjson
-
-# Recovery
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/init.recovery.qcom.rc:root/init.recovery.qcom.rc
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -370,7 +338,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.3-service-qti \
+    android.hardware.usb-service.qti \
     init.qcom.usb.rc \
     init.qcom.usb.sh
 
@@ -393,7 +361,10 @@ PRODUCT_PACKAGES += \
     hostapd \
     libwifi-hal-qcom \
     libwifi-hal \
-    libwpa_client \
+    vendor_bt_firmware_mountpoint \
+    vendor_dsp_mountpoint \
+    vendor_firmware-modem_mountpoint \
+    vendor_firmware_mnt_mountpoint \
     wpa_cli \
     wpa_supplicant \
     wpa_supplicant.conf
