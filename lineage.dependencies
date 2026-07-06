@@ -5,6 +5,7 @@
   },
   {
     "repository": "android_kernel_samsung_sm6375",
-    "target_path": "kernel/samsung/sm6375"
+    "target_path": "kernel/samsung/sm6375",
+    "branch": "lineage-23.2"
   }
 ]
