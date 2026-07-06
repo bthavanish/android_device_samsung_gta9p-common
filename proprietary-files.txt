@@ -1,4 +1,4 @@
-# Unpinned blobs from gta9pxxx-user 14 UP1A.231005.007 X216BXXS3CXG1 release-keys
+# Unpinned blobs from gta9pxxx-user 15 UP1A.231005.007 X216BXXS9DYJ7 release-keys
 
 # ACDB
 vendor/etc/acdbdata/MTP/holi-mtpsku1-snd-card/MTP_SKU1_Bluetooth_cal.acdb
